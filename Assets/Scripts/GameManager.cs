@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     
     public TextMeshProUGUI scoreText;
 
+    public GameObject restartButtonObject;
+
     private void Awake()
     {
         if (instance == null)
@@ -18,6 +20,15 @@ public class GameManager : MonoBehaviour
         }
             
     }
+
+    private void Start()
+    {
+        if (restartButtonObject != null)
+        {
+            restartButtonObject.SetActive(false);
+        }
+    }
+    
     public void AddScore()
     {
         score++;
@@ -31,5 +42,22 @@ public class GameManager : MonoBehaviour
         score = 0;
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ShowGameOver()
+    {
+        if (restartButtonObject != null)
+        {
+            restartButtonObject.SetActive(true);
+        }
+
+        Time.timeScale = 0f;
+    }
+
+    public void ToggleMenu()
+    {
+        bool isShowing = restartButtonObject.activeSelf;
+        Time.timeScale = isShowing ? 1f : 0f;
+        restartButtonObject.SetActive(!isShowing);
     }
 }
